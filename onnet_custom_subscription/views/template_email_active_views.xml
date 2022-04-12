@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="patient_card_email_active_template" model="mail.template">
+            <field name="name">Onboard: Email Activation (for Customer)</field>
+            <field name="model_id" ref="account.model_account_account"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html">
+                <![CDATA[
+
+
+                    <table border="0" cellpadding="0" cellspacing="0" style="box-sizing:border-box;padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;" width="100%"><tbody><tr><td align="center">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="box-sizing:border-box;padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                            <tbody>
+                                <!-- HEADER -->
+                                <tr>
+                                    <td align="center" style="min-width: 590px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="box-sizing:border-box;min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                            <tbody><tr><td valign="middle">
+                                                <span style="font-size: 10px;">Welcome to HiBoss</span><br>
+                                                <span style="font-size: 20px; font-weight: bold;">
+                                                    <t t-out="object.name or ''" data-oe-t-inline="true">--name--</t>
+                                                </span>
+                                            </td><td valign="middle" align="right">
+                                                <img t-attf-src="/logo.png?company={{ object.company_id.id }}" style="border-style:none;box-sizing:border-box;vertical-align:middle;padding: 0px; margin: 0px; height: 0px; width: 80px;" t-att-alt="object.company_id.name" width="80px" height="0">
+                                            </td></tr>
+                                            <tr><td colspan="2" style="text-align:center;">
+                                              <hr width="100%" style="border-style:none;border-top-width:medium;border-left-width:medium;border-bottom-width:medium;border-right-width:medium;overflow-y:visible;overflow-x:visible;height:0px;box-sizing:content-box;background-color:#cccccc;border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;">
+                                            </td></tr>
+                                        </tbody></table>
+                                    </td>
+                                </tr>
+                                <!-- CONTENT -->
+                                <tr>
+                                    <td align="center" style="min-width: 590px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="box-sizing:border-box;min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                            <tbody><tr><td valign="top" style="font-size: 13px;">
+                                                <div style="box-sizing:border-box;font-size:13px;">
+                                                    Dear <t t-out="object.name or ''" data-oe-t-inline="true">--name--</t>,<br><br>Thank you for choosing HiBoss. Your instance has been created.<br><br>Please activate your instance by clicking the button below<br><div style="box-sizing:border-box;font-size:13px;margin: 16px 0px 16px 0px;">
+                                                        <a t-att-href="--url_object--l" style="border-style:solid;cursor:pointer;text-transform:uppercase;transition-property:none;transition-delay:0s;transition-timing-function:ease;transition-duration:0s;line-height:1.5;border-left-color:#017e84;border-bottom-color:#017e84;border-right-color:#017e84;border-top-color:#017e84;border-left-width:1px;border-bottom-width:1px;border-right-width:1px;border-top-width:1px;user-select:none;vertical-align:middle;text-align:center;font-weight:500;display:inline-block;background-color:#017e84;color:#ffffff;box-sizing: border-box; padding: 8px 16px; text-decoration: none; border-radius: 5px; font-size: 13px;" href="--url_object--" target="_blank" class="btn btn-primary flat btn-lg"><!--[if mso]><i style="letter-spacing: 25px; mso-font-width: -100%; mso-text-raise: 30pt;">&nbsp;</i><![endif]--><!--[if mso]><i style="letter-spacing: 25px; mso-font-width: -100%; mso-text-raise: 30pt;">&nbsp;</i><![endif]--><!--[if mso]><i style="letter-spacing: 25px; mso-font-width: -100%; mso-text-raise: 30pt;">&nbsp;</i><![endif]--><!--[if mso]><i style="letter-spacing: 25px; mso-font-width: -100%; mso-text-raise: 30pt;">&nbsp;</i><![endif]--><!--[if mso]><i style="letter-spacing: 25px; mso-font-width: -100%; mso-text-raise: 30pt;">&nbsp;</i><![endif]--><!--[if mso]><i style="letter-spacing: 25px; mso-font-width: -100%; mso-text-raise: 30pt;">&nbsp;</i><![endif]--><!--[if mso]><i style="letter-spacing: 25px; mso-font-width: -100%; mso-text-raise: 30pt;">&nbsp;</i><![endif]-->Click to activate your instance<!--[if mso]><i style="letter-spacing: 25px; mso-font-width: -100%;">&nbsp;</i><![endif]--><!--[if mso]><i style="letter-spacing: 25px; mso-font-width: -100%;">&nbsp;</i><![endif]--><!--[if mso]><i style="letter-spacing: 25px; mso-font-width: -100%;">&nbsp;</i><![endif]--><!--[if mso]><i style="letter-spacing: 25px; mso-font-width: -100%;">&nbsp;</i><![endif]--><!--[if mso]><i style="letter-spacing: 25px; mso-font-width: -100%;">&nbsp;</i><![endif]--><!--[if mso]><i style="letter-spacing: 25px; mso-font-width: -100%;">&nbsp;</i><![endif]--><!--[if mso]><i style="letter-spacing: 25px; mso-font-width: -100%;">&nbsp;</i><![endif]--></a>
+                                                    </div>
+                                                    <t t-set="website_url" t-value="object.get_base_url()" data-oe-t-inline="true"></t>Any question, please find our FAQs <a href="/faqs" style="text-decoration:none;box-sizing:border-box;background-color:transparent;color:#01666b;">here</a> and don't hesitate to contact us through: <a href="#" style="text-decoration:none;box-sizing:border-box;background-color:transparent;color:#01666b;">Our Support Form</a>
+
+<br><br>
+                                                    Enjoy HiBoss!<br>
+                                                    --<br>The <t t-out="object.company_id.name or ''" data-oe-t-inline="true">YourCompany</t> Team
+                                                </div>
+                                            </td></tr>
+                                            <tr><td style="text-align:center;">
+                                              <hr width="100%" style="border-style:none;border-top-width:medium;border-left-width:medium;border-bottom-width:medium;border-right-width:medium;overflow-y:visible;overflow-x:visible;height:0px;box-sizing:content-box;background-color:#cccccc;border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;">
+                                            </td></tr>
+                                        </tbody></table>
+                                    </td>
+                                </tr>
+                                <!-- FOOTER -->
+                                <tr>
+                                    <td align="center" style="min-width: 590px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="box-sizing:border-box;min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                            <tbody><tr><td valign="middle" align="left">
+                                                <t t-out="object.company_id.name or ''" data-oe-t-inline="true">YourCompany</t>
+                                            </td></tr>
+                                            <tr><td valign="middle" align="left" style="opacity: 0.7;">
+                                                <t t-out="object.company_id.phone or ''" data-oe-t-inline="true">+1 650-123-4567</t>
+                                                <t t-if="object.company_id.email" data-oe-t-group-active="true" data-oe-t-inline="true">
+                                                    | <a t-att-href="'mailto:%s' % object.company_id.email" style="box-sizing:border-box;background-color:transparent;text-decoration:none; color: #454748;" t-out="object.company_id.email or ''">info@yourcompany.com</a>
+                                                </t>
+                                                <t t-if="object.company_id.website" data-oe-t-group-active="true" data-oe-t-inline="true">
+                                                    | <a t-att-href="'%s' % object.company_id.website" style="box-sizing:border-box;background-color:transparent;text-decoration:none; color: #454748;" t-out="object.company_id.website or ''">http://www.example.com</a>
+                                                </t>
+                                            </td></tr>
+                                        </tbody></table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                            </td></tr>
+                            <!-- POWERED BY -->
+                            <tr><td align="center" style="min-width: 590px;">
+                                <table border="0" cellpadding="0" cellspacing="0" width="590" style="box-sizing:border-box;min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                                  <tbody><tr><td style="text-align: center; font-size: 13px;">
+
+                                  </td></tr>
+                                </tbody></table>
+                            </td></tr>
+                            </tbody></table>
+                ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

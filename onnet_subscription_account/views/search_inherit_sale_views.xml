@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="inherit_custom_search" model="ir.ui.view">
+        <field name="name">inherit.view.search.inherit</field>
+        <field name="model">sale.subscription</field>
+        <field name="inherit_id" ref="sale_subscription.sale_subscription_view_search"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='filter_recurring_next_date']" position="after">
+                <separator/>
+                <filter name="trial" string="Trial" domain="[('stage_category', '=', 'trial')]"/>
+                <filter name="active" string="Active" domain="[('stage_category', '=', 'progress')]"/>
+                <filter name="non-renewing" string="Non-Renewing" domain="[('stage_category', '=', 'cancel')]"/>
+                <filter name="trial_next_trial" string="Trial expiring in the next weeks"
+                        domain="[('recurring_next_date','&lt;',(context_today() + relativedelta(days=7)).strftime('%Y-%m-%d')),
+                                                                                              ('recurring_next_date', '&gt;', (context_today() - relativedelta(days=1)).strftime('%Y-%m-%d')), ('stage_category', '=', 'trial')]"/>
+                <filter name="trial_last_trial" string="Trial expiring in the last weeks"
+                        domain="[('recurring_next_date','&gt;',(context_today() - relativedelta(days=7)).strftime('%Y-%m-%d')),
+                                                                                              ('recurring_next_date', '&lt;', (context_today()).strftime('%Y-%m-%d')), ('stage_category', '=', 'trial')]"/>
+                <filter name="trial_this_month" string="Canceled this month"
+                        domain="['&amp;', ('date', '&gt;=', context_today().strftime('%Y-%m-01')),
+                          ('date', '&lt;', (context_today() + relativedelta(months=1)).strftime('%Y-%m-01'))]"/>
+                <filter name="trial_last_month" string="Canceled last month"
+                        domain="['&amp;', '&amp;', ('date', '&gt;=', (context_today() - relativedelta(months=1)).strftime('%Y-%m-01')),
+                          ('date', '&lt;', (context_today() - relativedelta(months=0)).strftime('%Y-%m-01')), ('stage_category', '=', 'cancel')]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

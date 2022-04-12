@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="done_screen_views" name="Onnet Sign In" inherit_id="web.frontend_layout" primary="True">
+        <xpath expr="//header" position="replace">
+            <header>
+            </header>
+        </xpath>
+        <xpath expr="//div[@id='wrapwrap']/main" position="attributes">
+            <attribute name="t-attf-class" add="done-custom" separator=" "/>
+        </xpath>
+        <xpath expr="//div[@id='wrapwrap']/main" position="inside">
+            <div class="done_container">
+                <div class="layout_left">
+                    <div class="row_layout">
+                        <h2 class="display-1 mt0 mb24">All <strong>done</strong>!
+                        </h2>
+                        <p>
+                            <span class="fa fa-check text-success"></span>
+                            Your instance has been activated
+                        </p>
+                        <div class="o_db_activation_actions text-right mt48">
+                            <a t-attf-data-value="https://#{redirect_domain.website}" id="redirect_domain" class="btn btn-primary">Go to
+                                <strong><t t-esc="redirect_domain.website"/></strong>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="layout_right"></div>
+            </div>
+        </xpath>
+        <xpath expr="//footer" position="replace">
+            <footer>
+            </footer>
+        </xpath>
+    </template>
+</odoo>

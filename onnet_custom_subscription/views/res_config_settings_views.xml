@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.subscription</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="20"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="Subscriptions" string="Subscriptions"
+                     data-key="sale_subscription">
+                    <h2>Timeframe</h2>
+                    <div class="row mt16 o_settings_container" id="subscriptions_selection_settings">
+                        <div class="col-xs-12 col-md-6 o_setting_box" id="subscriptions_general">
+                            <div class="o_setting_right_pane">
+                                <label string="Trial period (days)" for="trial_period"/>
+                                <div class="text-muted">
+                                    Define the period for trial subscriptions.
+                                </div>
+                                <div>
+                                    <field placeholder="Enter trial period" name="trial_period"/>
+                                </div>
+                                <label class="mt16" string="Database expiration time (hours)" for="db_expiration_time"/>
+                                <div class="text-muted">
+                                    Define the period for database to be expired.
+                                </div>
+                                <div>
+                                    <field placeholder="Enter database expiration time" name="db_expiration_time"/>
+                                </div>
+
+                                <label class="mt16" string="Instance removal period for Trial description plans (days)" for="instance_removal_period_trial"/>
+                                <div class="text-muted">
+                                    Define the period to remove instance totally after expiration time for Trial plans only.
+                                </div>
+                                <div>
+                                    <field placeholder="Enter instance removal period for trial" name="instance_removal_period_trial"/>
+                                </div>
+
+                                <label class="mt16" string="Instance removal period for Active description plans (days)" for="instance_removal_period_active"/>
+                                <div class="text-muted">
+                                    Define the period to remove instance totally after expiration time for Active plans only.
+                                </div>
+                                <div>
+                                    <field placeholder="Enter instance removal period for active" name="instance_removal_period_active"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>Pricelists</h2>
+                    <div class="row mt16 o_settings_container" id="subscriptions_selection_pricelist">
+                        <div class="col-xs-12 col-md-6 o_setting_box" id="subscriptions_pricelist">
+                            <div class="o_setting_right_pane">
+                                <label string="Annually pricelist" for="annually_product_pricelist_id"/>
+                                <div class="text-muted">
+                                    Define the pricelist to be assigned to annual price.
+                                </div>
+                                <div>
+                                    <field name="annually_product_pricelist_id"/>
+                                </div>
+                                <label class="mt16" string="Monthly pricelist" for="month_product_pricelist_id"/>
+                                <div class="text-muted">
+                                    Define the pricelist to be assigned to monthly price.
+                                </div>
+                                <div>
+                                    <field name="month_product_pricelist_id"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>Subscription Stages</h2>
+                    <div class="row mt16 o_settings_container" id="subscriptions_selection_stages">
+                        <div class="col-xs-12 col-md-6 o_setting_box" id="subscriptions_stages">
+                            <div class="o_setting_right_pane">
+                                <label string="Draft Stage" for="draft_field"/>
+                                <div class="text-muted">Define the stage to be set for draft subscriptions.</div>
+                                <div class="">
+                                    <field name="draft_field"/>
+                                </div>
+                                <label class="mt16" string="Trial Stage" for="trial_field"/>
+                                <div class="text-muted">Define the stage to be set for trial subscriptions.</div>
+                                <div >
+                                    <field name="trial_field"/>
+                                </div>
+                                <label class="mt16" string="Active Stage" for="progress_field"/>
+                                <div class="text-muted">Define the stage to be set for active subscriptions.</div>
+                                <div>
+                                    <field name="progress_field"/>
+                                </div>
+                                <label class="mt16" string="Maintain Stage" for="progress_field"/>
+                                <div class="text-muted">Define the stage to be set for maintain subscriptions.</div>
+                                <div>
+                                    <field name="maintain_field"/>
+                                </div>
+                                <label class="mt16" string="Closed Stage" for="progress_field"/>
+                                <div class="text-muted">Define the stage to be set for closed subscriptions.</div>
+                                <div>
+                                    <field name="closed_field"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>Subscription Template</h2>
+                    <div class="row mt16 o_settings_container" id="subscriptions_selection_template">
+                        <div class="col-xs-12 col-md-6 o_setting_box" id="subscriptions_template">
+                            <div class="o_setting_right_pane">
+                                 <label string="Annually Template" for="annually_template"/>
+                                <div class="text-muted">Define annually template on order subscriptions</div>
+                                <div>
+                                    <field name="annually_template"/>
+                                </div>
+                                <label class="mt16" string="Monthly Template" for="monthly_template"/>
+                                <div class="text-muted">Define monthly template on order subscriptions</div>
+                                <div>
+                                    <field name="monthly_template"/>
+                                </div>
+                                <label class="mt16" string="Trial Template" for="trial_template"/>
+                                <div class="text-muted">Define trial template on order subscriptions</div>
+                                <div>
+                                    <field name="trial_template"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>Credit order</h2>
+                    <div class="row mt16 o_settings_container" id="subscriptions_selection_template">
+                        <div class="col-xs-12 col-md-6 o_setting_box" id="credit_template">
+                            <div class="o_setting_right_pane">
+                                 <label string="Credit order subscription" for="user_product_subscription_id"/>
+                                <div class="text-muted">Define credit of order subscriptions</div>
+                                <div>
+                                    <field name="user_product_subscription_id"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>Product extend</h2>
+                    <div class="row mt16 o_settings_container" id="subscriptions_selection_extend">
+                        <div class="col-xs-12 col-md-6 o_setting_box" id="product_extend">
+                            <div class="o_setting_right_pane">
+                                 <label string="Define product extend" for="user_product_extend_id"/>
+                                <div class="text-muted">Define product extend order subscriptions</div>
+                                <div>
+                                    <field name="user_product_extend_id"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>Billing Period</h2>
+                    <div class="row mt16 o_settings_container" id="subscriptions_selection_extend">
+                        <div class="col-xs-12 col-md-6 o_setting_box" id="product_extend">
+                            <div class="o_setting_right_pane">
+                                 <label string="Annually Billing Period" for="yearly_billing_period"/>
+                                <div class="text-muted">Define the number of days for a annually subscription</div>
+                                <div>
+                                    <field name="yearly_billing_period"/>
+                                </div>
+                                <label string="Monthly Billing Period" for="monthly_billing_period"/>
+                                <div class="text-muted">Define the number of days for a monthly subscription</div>
+                                <div>
+                                    <field name="monthly_billing_period"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>Domain</h2>
+                    <div class="row mt16 o_settings_container" id="subscriptions_selection_domain">
+                        <div class="col-xs-12 col-md-6 o_setting_box" id="subscriptions_domain">
+                            <div class="o_setting_right_pane">
+                                <label string="Default Domain" for="config_domain"/>
+                                <div class="text-muted">Define default domain used for instances.</div>
+                                <div>
+                                    <field name="config_domain"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>Text Most Popular</h2>
+                    <div class="row mt16 o_settings_container" id="subscriptions_text_most_popular">
+                        <div class="col-xs-12 col-md-6 o_setting_box" id="subscriptions_most_popular">
+                            <div class="o_setting_right_pane">
+                                <label string="Default Most Popular" for="text_popular"/>
+                                <div class="text-muted">Define default text most popular.</div>
+                                <div>
+                                    <field name="text_popular"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_setting_subscription" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'sale_subscription', 'bin_size': False}</field>
+        </record>
+
+    <!--menu setting subscription-->
+    <menuitem
+            id="menu_config"
+            name="Settings"
+            parent="sale_subscription.menu_sale_subscription_config"
+            sequence="0"
+            action="action_setting_subscription"
+           />
+    <!--End menu setting subscription-->
+</odoo>

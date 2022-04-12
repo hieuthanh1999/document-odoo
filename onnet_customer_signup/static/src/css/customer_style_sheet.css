@@ -1,0 +1,85 @@
+.customer-plan .list-group-flush .list-group-item{
+    text-align:left;
+}
+ #myCarousel .carousel-inner > .item > img,
+# myCarousel .carousel-inner > .item > a > img {
+    width: 70%;
+    margin: auto;
+ }
+ .btn-fill-violet-dark, .btn-violet-dark {
+    color: #FFFFFF;
+    background-color: #714B67;
+    border-color: #714B67;
+}
+.odoo_pricing_board table.table td {
+    padding: 0.35rem;
+    padding-left: 0;
+}
+.odoo_pricing_board table.table td:last-child {
+    padding-right: 0;
+    text-align: right;
+}
+.border-top-0 {
+    border-top: 0 !important;
+}
+.bg-gray-lighter {
+    background-color: #E9ECEF;
+    color: #212529;
+}
+
+.drgl_pricing.user-box {
+    width: 70%;
+    margin: auto;
+}
+
+.drgl_pricing.user-box input {
+    padding-left: 25%;
+}
+
+h3.plan-step-heading {
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #7D4DFC;
+    font-weight: 600;   
+}
+
+.input-group-text.custom-input-box {
+    border-radius: 0 0.25rem 0.25rem 0 !important;
+}
+
+label.label-plan {
+    font-weight: 600;
+}
+
+.industry-name {
+    font-weight: 600;
+    font-style: italic;
+    text-transform: uppercase;
+}
+.modal.fade .modal-content{
+    top: 20% !important;
+}
+li.list-group-item.custom-control.custom-checkbox p {
+    padding-left: 25px;
+    margin-bottom: 0px;
+    padding-right:120px;
+}
+.oe_website_contract .card-body a {
+    text-decoration: none;
+   }
+
+   .most-popular {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    background-color: #7D4DFC !important;
+    color: #fff;
+    padding: 5px 0px;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+.box-radius-top0{
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+

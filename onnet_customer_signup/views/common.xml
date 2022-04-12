@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="wizard_step_plan" name="Wizard Plan">
+        <section class="s_process_steps o_colored_level pt16" data-snippet="s_process_steps" data-name="Steps">
+            <div class="container">
+                <div class="row no-gutters">
+                    <div t-attf-class="#{'col-lg-4' if trial == 1 else 'col-lg-3'} s_process_step pt24 pb24 o_colored_level">
+                        <div class="s_process_step_icon">
+                            <span>
+                                <i class="step1 fa mx-auto bg-primary rounded-circle o_animate o_anim_fade_in_left o_visible fa-check"
+                                   style="animation-name: o_anim_fade_in_left; animation-play-state: running; visibility: visible;"></i>
+                            </span>
+                        </div>
+                        <div class="s_process_step_content text-center">
+                            <h4>Plans</h4>
+                        </div>
+                    </div>
+                    <div t-attf-class="#{'col-lg-4' if trial == 1 else 'col-lg-3'} s_process_step pt24 pb24 o_colored_level">
+                        <div class="s_process_step_icon">
+                            <span>
+                                <i t-att-class="'step2 fa mx-auto rounded-circle o_animate o_anim_fade_in_left o_visible fa-check o_visible %s' % (step == 20 and 'bg-primary' or step&gt;20 and 'bg-primary' or 'bg-600')"></i>
+                            </span>
+                        </div>
+                        <div class="s_process_step_content text-center">
+                            <h4>Add-ons</h4>
+                            <p class="o_default_snippet_text"></p>
+                        </div>
+                    </div>
+
+                    <div t-attf-class="#{'col-lg-4' if trial == 1 else 'col-lg-3'} s_process_step pt24 pb24 o_colored_level">
+                        <div class="s_process_step_icon">
+                            <span>
+                                <i t-att-class="'step3 fa mx-auto rounded-circle o_animate o_anim_fade_in_left o_visible fa-check o_visible %s' % (step == 30 and 'bg-primary' or step&gt;30 and 'bg-primary' or 'bg-600')"></i>
+                            </span>
+                        </div>
+                        <div class="s_process_step_content text-center">
+                            <h4>Billing Account</h4>
+                            <p class="o_default_snippet_text"></p>
+                        </div>
+                    </div>
+
+                    <div t-if="trial != 1" t-attf-class="col-lg-3 s_process_step pt24 pb24 o_colored_level">
+                        <div class="s_process_step_icon">
+                            <span>
+                                <i t-att-class="'step4 fa mx-auto rounded-circle o_animate o_anim_fade_in_left o_visible fa-check mx-auto bg-primary rounded-circle o_animate o_anim_fade_in_left o_visible o_animated %s' % (step == 40 and 'bg-primary' or step&gt;40 and 'bg-primary' or 'bg-600')"></i>
+                            </span>
+                        </div>
+                        <div class="s_process_step_content text-center">
+                            <h4>Review &#38; Payment</h4>
+                            <p class="o_default_snippet_text"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+</odoo>

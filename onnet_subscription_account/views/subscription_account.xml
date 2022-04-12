@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="onnent_subscription_account" name="Onnet Subscription Account List"
+              inherit_id="sale_subscription.portal_my_subscriptions">
+        <xpath expr="//td[@id='subscription_state']" position="replace">
+            <td class="text-center" id="subscription_state">
+                <t t-if="account.stage_id">
+                    <!--Stage Draft-->
+                    <t t-if="account.stage_id.is_check_show==true">
+                    <span t-if="account.stage_id.category == 'draft' and not account.to_renew"
+                          class="badge badge-pill badge-success">
+                        <i class="fa fa-fw fa-check"/>
+                        <t t-esc="account.stage_id.name"/>
+                    </span>
+                    </t>
+                    <t t-else="">
+                        <span t-if="account.stage_id.category == 'draft' and not account.to_renew"
+                          class="badge badge-pill badge-success">
+                        <i class="fa fa-fw fa-check"/>
+                        <t t-esc="account.stage_category"/>
+                        </span>
+                     </t>
+                     <!--End Stage Draft-->
+                     <!--Stage Trial-->
+                    <t t-if="account.stage_id.is_check_show == true">
+                        <span t-if="account.stage_id.category == 'trial'"
+                              class="badge badge-pill badge-success">
+                            <i class="fa fa-fw fa-check"/>
+                            <t t-esc="account.stage_id.name"/>
+                        </span>
+                    </t>
+                     <t t-else="">
+                         <span t-if="account.stage_id.category == 'trial'"
+                              class="badge badge-pill badge-success">
+                            <i class="fa fa-fw fa-check"/>
+                            <t t-esc="account.stage_category"/>
+                        </span>
+                     </t>
+                     <!--End Stage Trial-->
+                    <!--Stage cancel-->
+                    <t t-if="account.stage_id.is_check_show == true">
+                        <span t-if="account.stage_id.category == 'cancel'"
+                              class="badge badge-pill badge-success">
+                            <i class="fa fa-fw fa-check"/>
+                            <t t-esc="account.stage_id.name"/>
+                        </span>
+                    </t>
+                     <t t-else="">
+                         <span t-if="account.stage_id.category == 'cancel'"
+                              class="badge badge-pill badge-success">
+                            <i class="fa fa-fw fa-check"/>
+                            <t t-esc="account.stage_category"/>
+                        </span>
+                     </t>
+                    <!--Stage maintenance-->
+                    <t t-if="account.stage_id.is_check_show == true">
+                        <span t-if="account.stage_id.category == 'maintenance'"
+                              class="badge badge-pill badge-success">
+                            <i class="fa fa-fw fa-check"/>
+                            <t t-esc="account.stage_id.name"/>
+                        </span>
+                    </t>
+                     <t t-else="">
+                         <span t-if="account.stage_id.category == 'maintenance'"
+                              class="badge badge-pill badge-success">
+                            <i class="fa fa-fw fa-check"/>
+                            <t t-esc="account.stage_category"/>
+                        </span>
+                     </t>
+
+                     <!--End Stage Trial-->
+                    <span t-if="account.to_renew"
+                          class="badge badge-pill badge-warning">
+                        <i class="fa fa-fw fa-refresh"/>
+                        <t t-esc="account.stage_id.name"/>
+                    </span>
+                     <!--Stage closed-->
+                    <t t-if="account.stage_id.is_check_show==true">
+                         <span t-if="account.stage_id.category == 'closed'" class="badge badge-pill badge-default">
+                            <i class="fa fa-fw fa-remove"/>
+                            <t t-esc="account.stage_id.name"/>
+                        </span>
+                    </t>
+                     <t t-else="">
+                          <span t-if="account.stage_id.category == 'closed'" class="badge badge-pill badge-default">
+                            <i class="fa fa-fw fa-remove"/>
+                            <t t-esc="account.stage_category"/>
+                          </span>
+                     </t>
+                     <!--End Stage closed-->
+                      <!--Stage progress-->
+                     <t t-if="account.stage_id.is_check_show == true">
+                        <span t-if="account.stage_id.category == 'progress'"
+                              class="badge badge-pill badge-success">
+                            <i class="fa fa-fw fa-check"/>
+                            <t t-esc="account.stage_id.name"/>
+                        </span>
+                    </t>
+                     <t t-else="">
+                         <span t-if="account.stage_id.category == 'progress'"
+                              class="badge badge-pill badge-success">
+                            <i class="fa fa-fw fa-check"/>
+                            <t t-esc="account.stage_category"/>
+                        </span>
+                     </t>
+                     <!--End Stage progress-->
+                </t>
+            </td>
+        </xpath>
+    </template>
+
+    <template id="onnent_subscription_account_detail" name="Onnet Subscription Account Detail"
+              inherit_id="sale_subscription.subscription">
+        <xpath expr="//div[hasclass('card-header')]//div[hasclass('flex-grow-0')]" position="replace">
+            <div class="col-12 col-lg flex-grow-0 text-lg-right mb-1 mb-lg-0">
+                <t t-if="account.stage_id">
+                    <span t-if="account.stage_category == 'progress' and not account.to_renew"
+                          class="badge badge-pill badge-success">
+                        <i class="fa fa-fw fa-check"/>
+                        <t t-esc="account.stage_id.name"/>
+                    </span>
+                    <span t-if="account.stage_category == 'trial'"
+                          class="badge badge-pill badge-success">
+                        <i class="fa fa-fw fa-check"/>
+                        <t t-esc="account.stage_id.name"/>
+                    </span>
+                    <span t-if="account.stage_category == 'cancel'"
+                          class="badge badge-pill badge-success">
+                        <i class="fa fa-fw fa-check"/>
+                        <t t-esc="account.stage_id.name"/>
+                    </span>
+                    <span t-if="account.stage_category == 'maintenance'"
+                          class="badge badge-pill badge-success">
+                        <i class="fa fa-fw fa-check"/>
+                        <t t-esc="account.stage_id.name"/>
+                    </span>
+                    <span t-if="account.to_renew"
+                          class="badge badge-pill badge-warning">
+                        <i class="fa fa-fw fa-refresh"/>
+                        <t t-esc="account.stage_id.name"/>
+                    </span>
+
+                    <span t-if="account.stage_category == 'closed'" class="badge badge-pill badge-default">
+                        <i class="fa fa-fw fa-remove"/>
+                        <t t-esc="account.stage_id.name"/>
+                    </span>
+                </t>
+            </div>
+        </xpath>
+
+        <xpath expr="//ul[hasclass('list-group-flush')]/li[1]" position="after">
+            <li t-if="account.stage_id.name and account.stage_category == 'trial' or account.stage_category == 'draft'" class="list-group-item flex-grow-1">
+                <a class='btn btn-primary btn_cta active_subscription_status' role="button" data-toggle="modal"
+                   data-target="#" t-attf-data-id="#{account.id}" t-attf-data-stage="#{account.stage_category}" t-attf-data-order="#{account.order_id.id}" href="#">Upgrade Plans
+                </a>
+                <div id="hidden_subscription_modal" class="modal fade">
+                    <div class="modal-dialog modal-content">
+                        <div class="modal-body" id="pop_html">
+                            <a href="#" class="o_popup_btn_close o_not_editable o_default_snippet_text pull-right"
+                               data-dismiss="modal" style="font-size:30px">×
+                            </a>
+                            <br/>
+                            <div class="content">
+                                <div class="content_data">
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <div id="next_step_account" class="btn btn-primary mb32" data-step="4" t-attf-data-id="#{account.id}">
+                                        <span>Next Step</span>
+                                        <i class="fa fa-chevron-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li t-if="account.stage_id.name and account.stage_category == 'progress' and display_edit" class="list-group-item flex-grow-1">
+                <a class='btn btn-primary btn_cta upsell_subscription_status' role="button" data-toggle="modal"
+                   data-target="#" t-attf-data-id="#{account.id}" t-attf-data-stage="#{account.stage_category}" t-attf-data-order="#{account.order_id}" href="#">
+                    Change Plans
+                </a>
+                <div id="hidden_subscription_upsell_modal" class="modal fade">
+                    <div class="modal-dialog modal-content">
+                        <header class="modal-header">
+                            <h4 class="modal-title">Edit Subscription</h4>
+                        </header>
+                        <div class="modal-body" id="pop_html">
+                            <div class="content">
+                                <div class="content_data">
+                                </div>
+                               <div class="d-none">
+                                    <input type="text" name="order_id" class="form-control" t-att-value="account.id"/>
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="modal-footer" data-oe-model="ir.ui.view"  data-oe-field="arch">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button id="upsell_subscription" class="btn btn-primary" data-step="1" t-attf-data-id="#{account.id}"><span>Next Step</span>
+                                        <i class="fa fa-chevron-right"></i></button>
+                        </footer>
+                    </div>
+                </div>
+            </li>
+        </xpath>
+        <xpath expr="//div[@id='wc-modal-close']//div[hasclass('modal-content')]" position="replace">
+            <div class="modal-content">
+                <header class="modal-header">
+                    <h4 class="modal-title">Cancel Subscription</h4>
+                </header>
+                <form method="post" t-attf-action="/my/subscription/#{account.id}/cancel/?uuid=#{account.uuid}">
+                    <input class="d-none" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <main class="modal-body">
+                        <p>If you confirm your cancellation now, you can still access your subscription until <span t-esc="exp_date"/>.</p>
+                        <p>We always listen to our customer. Could you specify the reason for cancelling your subscription?</p>
+                        <div class="form-group">
+                            <select class="form-control" name="close_reason_id">
+                                <t t-foreach="close_reasons" t-as="close_reason">
+                                    <option  t-att-value="close_reason.id" t-esc="close_reason.name"/>
+                                </t>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" name="closing_text" style="width: 100%;" rows="3"></textarea>
+                        </div>
+                        <div class="form-group mb-0">
+                            <p>Would you like to have an extra service where you can have the extension for another 30 days from the end of their subscription plan?</p>
+                            <p>You will be charged more US$30.</p>
+                            <p>Otherwise, your subscription will end at the end of billing cycle.</p>
+                            <ul class="openerp_enterprise_hosting_list list-group list-group-flush">
+                              <li class="list-group-item custom-control custom-radio">
+                                <input id="imp_self" name="is_extra_maintenance" type="radio" value="extend" class="openerp_enterprise_impl_service custom-control-input " />
+                                <label for="imp_self" class="custom-control-label w-100 ml-3" stype="font-weight:400 !important">Extend my subscription for another 30 days from end of my plan</label>
+                              </li>
+                              <li class="list-group-item custom-control custom-radio openerp_enteprise_impl_service_success">
+                                <input id="imp_success" name="is_extra_maintenance" type="radio" value="not_extend" class="openerp_enterprise_impl_service custom-control-input " checked="checked" />
+                                <label for="imp_success" class="custom-control-label w-100 ml-3" stype="font-weight:400 !important">Do not extend this subscription and close it on the end of billing cycle</label>
+                              </li>
+                            </ul>
+                        </div>
+                    </main>
+                    <footer class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary contract-submit">Confirm</button>
+                    </footer>
+                </form>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('card-body')]//div[hasclass('offset-lg-1')]//a[hasclass('small')]" position="before">
+            <div t-if="account.website"><i class="fa fa-external-link fa-fw" t-att-aria-label="account.website" t-att-title="account.website"></i><a t-attf-href="https://{{ account.website }}" target="_blank"><span t-esc="account.website" style="padding-left:10px"></span></a></div>
+        </xpath>
+    </template>
+    <template id="onnent_powered_by" name="Onnet Powered by onnet"
+              inherit_id="portal.portal_record_sidebar">
+        <xpath expr="//div[@id='sidebar_content']/div[hasclass('card-footer')]" position="replace">
+            <div class="card-footer small text-center text-muted border-top-0 pt-1 pb-1 d-none d-lg-block">
+                Powered by  <a target="_blank" href="/" title="HiiBoss">HiiBoss</a> Pte Ltd
+            </div>
+        </xpath>
+    </template>
+     <record id="sale_subscription_view_form" model="ir.ui.view">
+        <field name="name">sale.subscription.form.view</field>
+        <field name="model">sale.subscription</field>
+        <field name="inherit_id" ref="sale_subscription.sale_subscription_view_form"/>
+        <field name="arch" type="xml">
+             <xpath expr="//field[@name='template_id']" position="after">
+                <field name="date" attrs="{'invisible':[('stage_category', '!=', 'cancel')]}"/>
+                <field name="is_extra_maintenance" attrs="{'invisible': [('stage_category', '!=', 'cancel'), ('stage_category', '!=', 'maintenance')]}"/><field name="website"/>
+            </xpath>
+            <xpath expr="//label[@for='recurring_next_date']" position="replace">
+                <label for="recurring_next_date" attrs="{'invisible': [('stage_category', 'not in', ['trial', 'progress'])]}" string="Cycle End Date"/>
+            </xpath>
+
+            <xpath expr="//group[@name='main']//div" position="replace">
+                <div attrs="{'invisible': [('stage_category', 'not in', ['trial', 'progress'])]}">
+                    <field name="recurring_next_date"/>
+                    <button name="generate_recurring_invoice"
+                            string="Generate Invoice"
+                            class="oe_link"
+                            icon="fa-long-arrow-right"
+                            type="object"
+                            groups="base.group_no_one"
+                            attrs="{'invisible': [('payment_mode', 'in', ['manual', 'success_payment'])]}"/>
+                </div>
+             </xpath>
+        </field>
+    </record>
+
+    <template id="order_view_plans" name="Onnet Subscription Account Detail">
+        <div class="account_form_order">
+            <h2 style="text-align:center; font-size 24px; font-weight:bold"
+                class="o_default_snippet_text">Order Plan Details
+            </h2>
+            <!-- ====== Plan details ====== -->
+            <t t-set="total_order" t-value="0"/>
+            <div class="row">
+                <div class="col-12 mt-4">
+                    <table class="table table-sm">
+                        <thead class="bg-100">
+                            <tr>
+                                <th>Product</th>
+                                <th class="text-right">Quantity</th>
+                                <th class="text-right d-none d-sm-table-cell">Unit Price</th>
+                                <th t-if="price_new_one_user" class="text-right d-none d-sm-table-cell">Prorated Unit Price</th>
+                                <th class="text-right">
+                                    <span>Total Price</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="list_product or []" t-as="plans">
+                                <td class="line-description">
+                                    <span t-field="plans.name"/>
+                                    <br/>
+                                    <t t-if="msg" t-esc="msg"></t>
+                                </td>
+                                <td class="text-right">
+                                    <t t-if="quantity" t-esc="quantity"></t>
+                                    <t t-else="">
+                                        <t t-if="plans.quantity_user" t-esc="plans.quantity_user"></t>
+                                        <t t-else="">
+                                            <t>1</t>
+                                        </t>
+                                    </t>
+                                </td>
+                                <td class="text-right d-none d-sm-table-cell">
+                                    <span>
+                                        <t t-if="product_pro_price" t-esc="product_pro_price"
+                                           t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"></t>
+
+                                        <t t-else="" t-esc="plans.list_price"
+                                           t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"></t>
+                                    </span>
+                                </td>
+                                <td t-if="price_new_one_user" class="text-right d-none d-sm-table-cell">
+                                    <span>
+                                        <t t-if="price_new_one_user" t-esc="price_new_one_user"
+                                           t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"></t>
+                                    </span>
+                                </td>
+                                <td class="text-right">
+                                    <span t-if="price_new" t-esc="price_new"
+                                          t-options="{'widget': 'monetary', 'display_currency': website.currency_id}">
+                                    </span>
+                                    <t t-else="">
+                                        <span t-if="plans.quantity_user" t-esc="plans.quantity_user * plans.list_price"
+                                          t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                        <span t-if="not plans.quantity_user" t-esc="plans.list_price"
+                                          t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                    </t>
+                                </td>
+                                <t t-if="plans.quantity_user">
+                                    <t t-set="total_order"
+                                       t-value="(plans.quantity_user * plans.list_price) + total_order"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-set="total_order" t-value="plans.list_price + total_order"/>
+                                </t>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div id="total" class="row" name="total" style="page-break-inside: avoid;">
+                        <div class="col-sm-7 col-md-5 ml-auto">
+                            <table class="table table-sm">
+                                <div class="d-none">
+                                    <input type="text" name="product_id" class="form-control" t-att-value="product_id"/>
+                                    <input type="text" name="quantity" class="form-control" t-att-value="quantity"/>
+                                    <input type="text" name="type" class="form-control" t-att-value="type"/>
+                                    <input type="text" name="credit" class="form-control" t-att-value="not_use_yet_price"/>
+                                    <input type="text" name="total" class="form-control" t-att-value="total_price"/>
+                                    <input type="text" name="price_new_one_user" class="form-control" t-att-value="price_new_one_user"/>
+                                </div>
+                                <tr t-if="not_use_yet_price" class="border-black" style="border-bottom:1px solid #dddddd;">
+                                    <td>
+                                        <strong>Credit</strong>
+                                    </td>
+                                    <td class="text-right">
+                                        <span data-id="recurring_total" >
+                                            <t t-if="not_use_yet_price" t-esc="not_use_yet_price"   t-options="{'widget': 'monetary', 'display_currency': website.currency_id}">
+                                            </t>
+                                        </span >
+                                    </td>
+                                </tr>
+                                <tr class="border-black"
+                                    style="border-bottom:1px solid #dddddd;">
+                                    <td>
+                                        <strong>Subtotal</strong>
+                                    </td>
+                                    <td class="text-right">
+                                        <span data-id="recurring_total" >
+                                            <t t-if="total_price">
+                                                <t t-esc="total_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                            </t>
+                                            <t t-else="">
+                                                <t t-esc="total_order" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                            </t>
+                                        </span >
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <t t-if="next_billing_date">
+                    <p>Once you have confirmed your changes, you cannot apply new changes until your next invoice date, which is <t t-esc="next_billing_date"/>.<br /> Click Next to confirm. </p>
+                    </t>
+                </div>
+            </div>
+            <!-- / Plan details ====== -->
+        </div>
+    </template>
+
+    <template id="andress_order_sub" name="Onnet Subscription Account Detail">
+         <div class="account_form_order form-row" style="">
+            <h2 style="text-align:center; font-size 24px; font-weight:bold; width: 100%;"
+                class="o_default_snippet_text">Comfirm Billing Account
+            </h2>
+            <div class="form-group  col-lg-12 div_name">
+                <label class="col-form-label" for="name">First and Last Name</label>
+                <input type="text" name="name" class="form-control" required="required" t-att-value="account.partner_id.name"/>
+            </div>
+            <div class="w-100"></div>
+            <div id="div_email" class="form-group  col-lg-12">
+                <label for="email" class="col-form-label ">Email</label>
+               <input type="email" name="email" class="form-control" required="required" t-att-value="account.partner_id.email"/>
+            </div>
+            <div class="w-100"></div>
+            <div class="form-group  col-lg-6 mb-0">
+                <label class="col-form-label" for="company_name">Company Name
+                </label>
+                <input type="text" name="company_name" class="form-control " t-att-value="account.partner_id.company_name"
+                        required="required"/>
+            </div>
+            <div id="div_phone" class="form-group  col-lg-6">
+                <label class="col-form-label" for="phone">Phone Number</label>
+                <input type="tel" name="phone" class="form-control "
+                      min="10" max="11" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                       placeholder="+84" required="required"  t-att-value="account.partner_id.phone"/>
+            </div>
+            <div class="w-100"></div>
+            <div class="form-group  col-lg-6 div_country">
+                <label class="col-form-label" for="country_id">Country</label>
+                <select id="country_id" name="country_id" t-attf-class="form-control" required="required">
+                    <option value="">Country...</option>
+                    <t t-foreach="countries" t-as="c">
+                        <option t-att-value="c.id" t-att-selected="c.id == int(account.partner_id.country_id)">
+                            <t t-esc="c.name"/>
+                        </option>
+                    </t>
+                </select>
+            </div>
+            <div class="form-group  col-lg-6 div_country">
+                <label class="col-form-label" for="country_id">Language</label>
+                 <select id="language_id" name="language_id" t-attf-class="form-control" required="required">
+                    <option value="">Language...</option>
+                    <t t-foreach="langs or []" t-as="l">
+                        <option t-att-value="l.code" t-att-selected="l.code == account.partner_id.lang">
+                            <t t-esc="l.name"/>
+                        </option>
+                    </t>
+                </select>
+            </div>
+            <input type="hidden" name="partner_id" t-att-value="partner_id"/>
+            <input t-if="product_id" type="hidden" name="product_id" t-att-value="product_id"/>
+            <input t-if="type" type="hidden" name="type" t-att-value="type"/>
+            <input t-if="quantity" type="hidden" name="quantity" t-att-value="quantity"/>
+            <input t-if="credit" type="hidden" name="credit" t-att-value="credit"/>
+            <input t-if="total" type="hidden" name="total" t-att-value="total"/>
+            <input t-if="price_new_one_user" type="hidden" name="price_new_one_user" t-att-value="price_new_one_user"/>
+            <div class="w-100"></div>
+        </div>
+    </template>
+    <template id="payment">
+        <t t-call="website.layout">
+            <div class="oe_structure">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-8 col-lg-9">
+                            <h3 class="o_page_header mt8">Billing Address</h3>
+                            <div id="address_on_payment">
+                                <div class="card">
+                                    <div class="card-body" id="shipping_and_billing">
+                                        <b>Billing:</b>
+                                        <span data-oe-type="contact" data-oe-expression="order.partner_id"
+                                              class="address-inline">
+                                            <address class="mb-0" itemscope="itemscope" >
+                                                <div itemprop="address" itemscope="itemscope" >
+                                                    <t t-if="order">
+                                                        <t t-esc="order.partner_id" t-options="dict(widget='contact', fields=['name', 'address'], no_marker=True)"/>
+                                                    </t>
+                                                 </div>
+                                            </address>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div t-if="acquirers" id="payment_method" class="mt-3">
+                                    <h3 class="mb24">Pay with </h3>
+                                    <t t-call="payment.checkout">
+                                        <t t-set="footer_template_id" t-value="'website_sale.payment_footer'"/>
+                                        <t t-set="submit_button_label">Pay Now</t>
+                                    </t>
+                                </div>
+                                <div t-else="" class="alert alert-warning">
+                                    <strong>No suitable payment option could be found.</strong><br/>
+                                    If you believe that it is an error, please contact the website administrator.
+                                </div>
+                                <div name="o_checkbox_container" class="custom-control custom-checkbox mt-2 o_accept_tc_button"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="get_list_product" name="Onnet list product Subscription ">
+        <div class="form-group  col-lg-6 ">
+            <label class="col-form-label">Choose an action to continue</label>
+            <select id="action_update" name="action_update" t-attf-class="form-control">
+                <option value="upgrade">
+                    Upgrading
+                </option>
+                <option value="downgrade">
+                    Downgrading
+                </option>
+            </select>
+        </div>
+        <div t-if="list_product" class="form-group  col-lg-6 ">
+            <label class="col-form-label">Choose a subscription plan</label>
+            <select id="product_id" name="product_id" t-attf-class="form-control" required="required">
+                <t t-foreach="list_product" t-as="p">
+                    <option t-att-value="p.id" >
+                        <t t-esc="p.name"/>
+                    </option>
+                </t>
+            </select>
+        </div>
+        <div t-if="list_product" class="form-group  col-lg-6 choose-users">
+             <label class="col-form-label">Choose users</label>
+             <t t-set="key" t-value="1"/>
+             <t t-foreach="list_product" t-as="pro" >
+                 <t t-if="key==1">
+                     <t t-if="quanty_order > pro.quantity_user">
+                         <input type="number" class="form-control" t-att-min="quanty_order" name="numUser" t-att-value="quanty_order" t-att-data-name="pro.name"/>
+                     </t>
+                     <t t-else="">
+                         <input type="number" class="form-control" t-att-min="pro.quantity_user" name="numUser" t-att-value="pro.quantity_user" t-att-data-name="pro.name"/>
+                     </t>
+                 </t>
+                 <t t-set="key" t-value="key+1"/>
+             </t>
+        </div>
+        <div t-else="">
+            The package you are using is already the lowest package
+        </div>
+        <div class="d-none">
+            <input type="text" name="type" class="form-control" t-att-value="type"/>
+        </div>
+    </template>
+
+    <template id="get_list_plan" name="Onnet list plan Subscription ">
+        <t t-foreach="list_plan" t-as="p">
+            <option t-if="p.is_subscription_plans == True" t-att-value="p.id">
+                <t t-esc="p.name"/>
+            </option>
+        </t>
+    </template>
+</odoo>

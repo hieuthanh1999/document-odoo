@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="pricing_plan">
+        <t t-call="website.layout">
+            <t t-call="onnet_customer_signup.wizard_step_plan" class="process_step">
+                <t t-set="step" t-value="10"/>
+                <t t-set="trial" t-value="trial"/>
+            </t>
+            <t t-if="product" t-set="combination_product" t-value="product._get_combination_info(only_template=True, add_qty=add_qty or 1, pricelist=pricelist)"/>
+            <section class="s_comparisons pt32 pb32 o_colored_level o_cc o_cc1 o_half_screen_height"
+                     data-snippet="s_comparisons" data-name="Comparisons">
+                <div class="container">
+                    <div class="row">
+                        <t t-set="number" t-value="1"/>
+                        <div class="col-12 col-md-8 col-lg-9">
+                            <div class="customer-plan">
+                                <h3 class="mt-3 plan-step-heading">Your plans for
+                                    <span class="industry-name"><t t-esc="industry.industry_name"/></span>
+                                </h3>
+                                <div t-attf-class="row owl-carousel owl-theme #{(most_popular == True and 'popular-plan') or ''}">
+                                    <t t-foreach="subscription_plans.sorted(key=lambda p: p.sequence)" t-as="plans">
+                                        <t t-set="combination_info"
+                                           t-value="plans._get_combination_info(only_template=True, add_qty=add_qty or 1, pricelist=pricelist)"/>
+                                        <div t-attf-class="owl_plancing s_col_no_bgcolor text-center pb16 col-lg-12 o_animate o_visible o_animated">
+                                            <t t-if="most_popular == True">
+                                                <div t-if="plans.priority =='1'" class="most-popular"><t t-if="text_popular" t-esc="text_popular"/> </div>
+                                                <div t-else="" class="most-popular" style="visibility: hidden">Most none</div>
+                                            </t>
+                                            <div t-attf-class="card bg-200 ">
+                                                <h5 class="card-header">
+                                                    <input t-att-id="plans.id" type="radio" name="package" t-att-data-name="plans.name"
+                                                           t-att-data-price="combination_info['list_price']"
+                                                           t-att-checked="product_id == plans.id"
+                                                           t-att-data-value="plans.id"/>
+                                                    <label class="label label-plan" t-att-for="plans.id">
+                                                        <t t-esc="plans.name"/>
+                                                    </label>
+                                                    <t t-if="trial==1">
+                                                        <p>
+                                                            <span class="h5" t-esc="0.0"
+                                                              t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                                        </p>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <p>
+                                                            <span class="h5" t-if="combination_info['list_price']" t-esc="combination_info['list_price']*plans.quantity_user"
+                                                              t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                                            <span style="font-size:12px">$
+                                                                per <t t-if="pricelist_id==annually.id">year</t> <t t-if="pricelist_id==month.id">month</t>
+                                                            </span>
+                                                        </p>
+                                                        <div class="input-group mb-2 drgl_pricing user-box" style="">
+                                                            <input type="number" class="form-control" t-att-min="plans.quantity_user" name="numUser" t-att-value="plans.quantity_user" t-att-data-name="plans.name" t-att-data-price="combination_info['list_price']"/>
+                                                            <div class="input-group-prepend">
+                                                                <div class="input-group-text">Users</div>
+                                                            </div>
+                                                        </div>
+                                                    </t>
+                                                </h5>
+                                                <ul class="list-group list-group-flush">
+                                                    <t t-foreach="plans.tab_module.category_id" t-as="category">
+                                                        <t t-foreach="category.modules" t-as="tab_module">
+                                                            <li class="list-group-item">
+                                                                <span class="fa fa-check text-o-color-1"
+                                                                      data-original-title="tab_module.module_name"
+                                                                      title="tab_module.module_name"></span>
+                                                                <t t-esc="tab_module.module_name"/>
+                                                            </li>
+                                                        </t>
+                                                    </t>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <div id="back_step" class="btn btn-secondary mb32 back_step" data-step="2" style="visibility: hidden">
+                                    <i class="fa fa-chevron-left"></i>
+                                    <span>Back</span>
+                                </div>
+                                <div id="next_step" class="btn btn-primary mb32" data-step="1">
+                                    <span>Next Step</span>
+                                    <i class="fa fa-chevron-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-3">
+                            <h3 class="mt-3 plan-step-heading">Plan summary</h3>
+                            <div class="card mt-3 mb-3 border odoo_pricing_board position-sticky">
+                                <div t-if="trial!=1" class="card-header border-bottom bg-200 pt-0">
+                                    <ul class="nav nav-tabs card-header-tabs">
+                                        <t t-set="curr_pl" t-value="website.get_current_pricelist()"/>
+                                        <li class="nav-item" data-type="annually">
+                                            <a t-attf-href="/shop/change_pricelist/{{ annually.id }}"
+                                               t-attf-class="nav-link px-3 border-top-0 rounded-0 fw_bold #{(curr_pl.id == annually.id and 'active') or ''}">
+                                                <t t-esc="annually.name"></t>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item" data-type="monthly">
+                                            <a t-attf-href="/shop/change_pricelist/{{ month.id }}"
+                                               t-attf-class="nav-link px-2 border-top-0 rounded-0 fw_bold #{(curr_pl.id == month.id and 'active') or ''}">
+                                                <t t-esc="month.name"></t>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-body">
+                                    <t t-if="trial==1">
+                                        <t t-call="onnet_customer_signup.short_cart_summary_trial"></t>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-call="onnet_customer_signup.short_cart_summary"></t>
+                                    </t>
+                                    <div class="openerp_enterprise_pricing_is_not_free_trial">
+                                        <div class="openerp_enterprise_pricing_form_button">
+                                            <form role="form" action='/add-ons' method="POST">
+                                                <input id="indistry" name="indistry" type="hidden"
+                                                       t-att-value="industry.id"/>
+                                                <input id="csrf_token" name="csrf_token" type="hidden"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input id="process_step" name="step" type="hidden"
+                                                       t-att-value="2"/>
+                                                <input id="trial" name="trial" type="hidden"
+                                                       t-att-value="trial"/>
+                                                <input id="form_package_users_num" name="package_users_num"
+                                                       type="hidden" t-att-value="product.quantity_user"/>
+                                                <input id="form_product_id" name="product_id" type="hidden"
+                                                       t-att-value="product_id"/>
+                                                <t t-if="trial==1">
+                                                    <input t-if="combination_product" id="form_package_total" name="package_total" type="hidden"
+                                                           t-att-value="0"/>
+                                                    <input id="form_package_total_change" name="package_total_change" type="hidden" t-att-value="0"/>
+                                                </t>
+                                                <t t-else="">
+                                                     <input t-if="combination_product" id="form_package_total" name="package_total" type="hidden"
+                                                       t-att-value="combination_product['list_price']*plans.quantity_user"/>
+                                                     <input id="form_package_total_change" name="package_total_change" type="hidden" t-att-value="combination_product['list_price']*plans.quantity_user"/>
+                                                </t>
+                                                <p></p>
+                                                <button class="btn btn-primary btn-block btn-lg openerp_enterprise_pricing_buy_now d-none"
+                                                        type="submit">
+                                                    <strong>BUY NOW</strong>
+                                                </button>
+                                            </form>
+                                            <div class="mt16 alert alert-danger openerp_enterprise_pricing_error_no_apps d-none">
+                                                Please
+                                                select at least one App.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </t>
+    </template>
+
+    <template id="payment">
+        <t t-call="website.layout">
+            <div class="oe_structure">
+                <t t-call="onnet_customer_signup.wizard_step_plan">
+                    <t t-set="step" t-value="40"/>
+                    <t t-set="trial" t-value="trial"/>
+                </t>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-8 col-lg-9">
+                            <h3 class="mt-3 plan-step-heading">Billing Address</h3>
+                            <div id="address_on_payment">
+                                <div class="card">
+                                    <div class="card-body" id="shipping_and_billing">
+                                        <b>Billing:</b>
+                                        <span data-oe-type="contact" data-oe-expression="order.partner_id"
+                                              class="address-inline">
+                                            <address class="mb-0" itemscope="itemscope" >
+                                                <div itemprop="address" itemscope="itemscope" >
+                                                    <t t-if="order">
+                                                        <t t-esc="order.partner_id" t-options="dict(widget='contact', fields=['name', 'address'], no_marker=True)"/>
+                                                    </t>
+                                                 </div>
+                                            </address>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div t-if="acquirers" id="payment_method" class="mt-3">
+                                    <h3 class="mt-3 plan-step-heading">Pay with </h3>
+                                    <t t-call="payment.checkout">
+                                        <t t-set="footer_template_id" t-value="'website_sale.payment_footer'"/>
+                                        <t t-set="submit_button_label">Pay Now</t>
+                                    </t>
+                                </div>
+                                <div t-else="" class="alert alert-warning">
+                                    <strong>No suitable payment option could be found.</strong><br/>
+                                    If you believe that it is an error, please contact the website administrator.
+                                </div>
+                                <div name="o_checkbox_container" class="custom-control custom-checkbox mt-2 o_accept_tc_button"></div>
+                            </div>
+                        </div>
+                         <div class="col-12 col-md-4 col-lg-3">
+                            <h3 class="mt-3 plan-step-heading">Plan summary</h3>
+                            <div class="card mt-3 mb-3 border odoo_pricing_board position-sticky">
+                                <div class="card-header border-bottom bg-200 pt-0">
+                                    <ul class="nav nav-tabs card-header-tabs">
+                                        <t t-set="curr_pl" t-value="website.get_current_pricelist()"/>
+                                        <li class="nav-item" data-type="annually">
+                                            <a t-attf-class="nav-link px-2 border-top-0 rounded-0 fw_bold #{(curr_pl.id == annually.id and 'active') or ''}">
+                                                <t t-esc="annually.name"></t>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item" data-type="monthly">
+                                            <a t-attf-class="nav-link px-2 border-top-0 rounded-0 fw_bold #{(curr_pl.id == month.id and 'active') or ''}">
+                                                <t t-esc="month.name"></t>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-body">
+                                    <div class="tab-content mb-3 mb-lg-0" style="">
+                                        <div class="tab-pane fade tab-pane-yearly in active show" id="yearly">
+                                            <table id="o_yearly_table" class="table mb-1">
+                                                <tbody>
+                                                    <div t-if="order" class="list_addons">
+                                                        <t t-set="number" t-value="1"/>
+                                                        <tr t-foreach="order.order_line" t-as="sub_order">
+                                                            <td t-attf-class="#{(number == 1 and 'border-top-0') or ''}">
+                                                                <b>
+                                                                    <span class="onnet_pricing_apps_num"><t t-esc="sub_order['product_uom_qty']"/></span>
+                                                                </b>
+                                                                <span class="name_package btn-link">
+                                                                    <t t-esc="sub_order['name']"/>
+                                                                </span>
+                                                            </td>
+                                                            <td t-attf-class="text-right #{(number == 1 and 'border-top-0') or ''}">
+                                                                <b class="onnet_pricing_apps_price_yearly">
+                                                                    <t t-esc="sub_order['price_unit']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                                                </b>
+                                                                <span class="openerp_enterprise_pricing_currency">USD</span>
+                                                            </td>
+                                                            <t t-set="number" t-value="number+1"/>
+                                                        </tr>
+                                                    </div>
+                                                    <tr class="package_total">
+                                                        <td>
+                                                            <b>Total</b>
+                                                            / <t t-if="order.pricelist_id.id==annually.id">year</t> <t t-if="order.pricelist_id.id==month.id">month</t>
+                                                        </td>
+                                                        <td>
+                                                            <b class="onnet_pricing_price_yearly"><t t-if="total_price" t-esc="total_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                                            </b>
+                                                            <span class="openerp_enterprise_pricing_currency"><t t-esc="website.currency_id.name"/></span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="short_cart_summary" name="Short Cart right column">
+        <div class="tab-content mb-3 mb-lg-0" style="">
+            <div class="tab-pane fade tab-pane-yearly in active show" id="yearly">
+                <table id="o_yearly_table" class="table mb-1">
+                    <tbody>
+                        <t t-if="product">
+                            <t t-set="combination_product" t-value="product._get_combination_info(only_template=True, add_qty=add_qty or 1, pricelist=pricelist)"/>
+                            <tr>
+                                <td>
+                                     <b><span class="onnet_pricing_users_num">
+                                            <t t-esc="product.quantity_user"/>
+                                        </span> </b>
+                                    <span class="name_package btn-link">
+                                        <t t-esc="product.name"/>
+                                    </span>
+                                </td>
+                                <td>
+                                    <b class="onnet_pricing_apps_price_yearly"><t t-esc="combination_product['list_price']*product.quantity_user" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/></b>
+                                    <span class="openerp_enterprise_pricing_currency"><t t-esc="website.currency_id.name"/></span>
+                                </td>
+                            </tr>
+                        </t>
+                        <div t-if="addons_list" class="list_addons">
+                            <tr t-foreach="addons_list" t-as="addon">
+                                <td>
+                                    <span class="name_package btn-link">
+                                        <t t-esc="addon['name']"/>
+                                    </span>
+                                </td>
+                                <td class="text-right">
+                                    <b class="onnet_pricing_apps_price_yearly">
+                                        <t t-esc="addon['list_price']"/>
+                                    </b>
+                                    <span class="openerp_enterprise_pricing_currency"><t t-esc="website.currency_id.name"/></span>
+                                </td>
+                            </tr>
+                        </div>
+                        <input name="product_order" type="hidden" t-att-value="list_order"/>
+                        <tr class="package_total">
+                            <td>
+                                <b>Total</b>
+                                / <t t-if="pricelist_id==annually.id">year</t> <t t-if="pricelist_id==month.id">month</t>
+                            </td>
+                            <td>
+                                <t t-if="step==4">
+                                    <b class="onnet_pricing_price_yearly"><t t-esc="total_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/></b>
+                                </t>
+                                <t t-else="">
+                                    <t t-if="combination_product">
+                                    <b class="onnet_pricing_price_yearly"><t t-esc="combination_product['list_price']*product.quantity_user" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                    </b>
+                                    </t>
+                                </t>
+                                <span class="openerp_enterprise_pricing_currency"><t t-esc="website.currency_id.name"/></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </template>
+
+    <template id="short_cart_summary_trial" name="Short Cart trial">
+        <div class="tab-content mb-3 mb-lg-0" style="">
+            <div class="tab-pane fade tab-pane-yearly in active show" id="yearly">
+                <table id="o_yearly_table" class="table mb-1">
+                    <tbody>
+                        <t t-if="product">
+                            <tr>
+                                <td style="border-top:0px">
+                                    <b>
+                                        <span class="onnet_pricing_users_num">
+                                            1
+                                        </span>
+                                    </b>
+                                    <span class="name_package btn-link">
+                                        <t t-esc="product.name"/>
+                                    </span>
+                                </td>
+                                <td style="border-top:0px">
+                                    <b class="onnet_pricing_apps_price_yearly">$0.0</b>
+                                    <span class="openerp_enterprise_pricing_currency"><t t-esc="website.currency_id.name"/></span>
+                                </td>
+                            </tr>
+                        </t>
+                        <div t-if="addons_list" class="list_addons">
+                            <tr t-foreach="addons_list" t-as="addon">
+                                <td>
+                                    <span class="name_package btn-link">
+                                        <t t-esc="addon['name']"/>
+                                    </span>
+                                </td>
+                                <td class="text-right">
+                                    <b class="onnet_pricing_apps_price_yearly">$0.0
+                                    </b>
+                                    <span class="openerp_enterprise_pricing_currency"><t t-esc="website.currency_id.name"/></span>
+                                </td>
+                            </tr>
+                        </div>
+                        <input name="product_order" type="hidden" t-att-value="list_order"/>
+                        <tr class="package_total">
+                            <td>
+                                <b>Total</b>
+                            </td>
+                            <td>
+                                <t t-if="step==4">
+                                    <b class="onnet_pricing_price_yearly">$<t t-esc="total_price"/></b>
+                                </t>
+                                <t t-else="">
+                                    <b class="onnet_pricing_price_yearly">$0.0
+                                    </b>
+                                </t>
+                                <span class="openerp_enterprise_pricing_currency"><t t-esc="website.currency_id.name"/></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </template>
+
+    <template id="view_addons">
+        <div class="openerp_enterprise_pricing_step">
+            <div class="openerp_enterprise_pricing_step_head">
+                <h3 class="mt-3 plan-step-heading">
+                    <b>Optional add-ons</b>
+                </h3>
+            </div>
+            <div class="openerp_enterprise_pricing_step_body o_pricing_hosting card mb-3">
+                <ul class="openerp_enterprise_hosting_list list-group list-group-flush">
+                    <t t-foreach="add_ons.sorted(key=lambda p: p.id)" t-as="addon">
+                        <t t-if="addon.is_add_ons == True">
+                            <li class="list-group-item custom-control custom-checkbox">
+                                <label t-att-for="addon.id" class="w-100 ml-3">
+                                    <t t-if="trial==1">
+                                        <input type="checkbox" t-att-id="addon.id"
+                                           name="name_addons"
+                                           t-att-value="addon.id" t-att-data-name="addon.name"
+                                           t-att-data-price="0" t-att-checked="addon.id in product_order"/>
+                                    </t>
+                                    <t t-else="">
+                                        <input type="checkbox" t-att-id="addon.id"
+                                           name="name_addons"
+                                           t-att-value="addon.id" t-att-data-name="addon.name"
+                                           t-att-data-price="addon.list_price" t-att-checked="addon.id in product_order"/>
+                                    </t>
+                                    <b class="ml-2">
+                                        <t t-esc="addon.name"/>
+                                    </b>
+                                    <small class="ml-2 custom_add_pre"
+                                           style="float: right;font-weight: 600;margin-right: 2rem;">
+                                        $
+                                        <t t-if="trial==1">
+                                            0.00
+                                        </t>
+                                        <t t-else="">
+                                            <t t-esc="addon.list_price"/>
+                                        </t>
+                                        USD
+                                    </small>
+                                    <t t-if="addon.description" style="padding-left: 25px" t-esc="addon.description"></t>
+                                </label>
+                            </li>
+                        </t>
+                    </t>
+                </ul>
+            </div>
+        </div>
+    </template>
+
+    <template id="review_order_ajax">
+        <h3 class="mt-3 plan-step-heading">Get Started</h3>
+        <div class="form-row">
+            <div class="form-group  col-lg-12 div_name">
+                <label class="col-form-label" for="name">First and Last Name</label>
+                <input type="text" name="name" class="form-control" required="required" t-att-value="'name' in checkout and checkout['name']"/>
+                <span class="error_name d-none" style="color:red"></span>
+            </div>
+            <div class="w-100"></div>
+            <div id="div_email" class="form-group col-lg-6 mb-0">
+                <label for="email" class="col-form-label ">Email</label>
+                <input type="email" name="email" class="form-control" required="required" t-att-value="'email' in checkout and checkout['email']"/>
+                <span class="error_email d-none" style="color:red"></span>
+            </div>
+            <div id="div_phone" class="form-group  col-lg-6">
+                <label class="col-form-label" for="phone">Phone Number</label>
+                <input type="tel" name="phone" class="form-control "
+                       t-att-value="'phone' in checkout and checkout['phone']" min="10" max="11"
+                       placeholder="+65" required="required"/>
+                <span class="error_phone d-none" style="color:red"></span>
+            </div>
+            <div class="w-100"></div>
+            <div class="form-group col-lg-6 mb-0">
+                <label class="col-form-label" for="company_name">Company Name
+                </label>
+                <input type="text" name="company_name" class="form-control "
+                       t-att-value="'company_name' in checkout and checkout['company_name']" required="required"/>
+                <span class="error_message d-none" style="color:red"></span>
+            </div>
+            <div id="div_phone" class="domain-name-form form-group  col-lg-6">
+                <label for="website" class="col-form-label">Domain</label>
+                <div class="select-group field-db-name">
+                    <div class="input-group">
+                        <input type="text" name="website" min="4" id="website" class="form-control"/>
+                        <div class="input-group-addon p-0">
+                            <div class="input-group-text border-left-0 custom-input-box">.<span t-esc="seting_domain"></span></div>
+                        </div>
+                    </div>
+                </div>
+                <span class="error_website d-none" style="color:red"></span>
+            </div>
+            <div class="w-100"></div>
+            <div class="form-group  col-lg-6 div_country">
+                <label class="col-form-label" for="country_id">Country</label>
+                <select id="country_id" name="country_id" t-attf-class="form-control" required="required">
+                    <option value="">Country...</option>
+                    <t t-foreach="countries" t-as="c">
+                        <option t-att-value="c.id" t-att-selected="c.id == checkout['country_id'].id">
+                            <t t-esc="c.name"/>
+                        </option>
+                    </t>
+                </select>
+                <span class="error_country d-none" style="color:red"></span>
+            </div>
+            <div class="form-group  col-lg-6 div_country">
+                <label class="col-form-label" for="country_id">Language</label>
+                <select id="language_id" name="language_id" t-attf-class="form-control" required="required">
+                    <t t-foreach="langs or []" t-as="l">
+                        <option t-if="l.code == 'en_US'" selected="selected" t-att-value="l.code" t-esc="l.name"/>
+                        <option t-else="" t-att-value="l.code" disabled="disabled" t-esc="l.name"/>
+                    </t>
+                </select>
+                <span class="error_language d-none" style="color:red"></span>
+            </div>
+            <input type="hidden" name="partner_id" t-att-value="partner_id"/>
+            <input type="hidden" name="db_name" id="db-name"/>
+            <div class="w-100"></div>
+        </div>
+        <div class="form-group">
+            <div class="alert bg-gray-lighter small text-center mt16 mb24">
+                <div class="text-center">By clicking on <b>Next Step</b>, you accept our <a href="/subscription-agreement" target="_blank">Subscription Agreement</a> and
+                    <a href="/privacy-policy" target="_blank">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>

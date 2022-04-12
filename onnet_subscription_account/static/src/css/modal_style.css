@@ -1,0 +1,20 @@
+.modal.fade .modal-content {
+    max-height: 700px;
+    max-width: 900px;
+    top: 10%;
+    padding: 0;
+}
+
+.modal.fade .o_popup_btn_close {
+    text-decoration: none;
+}
+.modal.fade .justify-content-between {
+    justify-content: flex-end !important;
+}
+
+#address_on_payment .btn.btn-secondary {
+    display: none;
+}
+.choose-users input.form-control{
+    width: 60px;
+}
