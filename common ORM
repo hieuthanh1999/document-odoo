@@ -1,0 +1,68 @@
+Common ORM Methods
+1.create() 
+Phương thức create () được sử dụng để tạo các bản ghi mới cho mô hình
+self.create ({'name': 'Cybrosys', 'email': 'demo@cybrosys.com'})  
+2. write()
+Phương thức write () được sử dụng để cập nhật các bản ghi bên trong mô hình với các giá trị được cung cấp. Phương thức này chấp nhận một tập hợp các giá trị từ điển và bản ghi được cập nhật với các giá trị này.
+Syntax: Model.write(vals) ? updated record
+Eg: self.write({'email': 'demo@cybrosys.info'})
+Thao tác này cập nhật trường email hồ sơ hiện tại với giá trị demo@cybrosys.info
+3. browse()
+Phương thức Browse () được sử dụng để trả về một tập hợp các bản ghi cho các ID được truyền dưới dạng tham số trong mô hình làm việc hiện tại. Phương thức này chấp nhận một tập hợp các ID và trả về các tập bản ghi tương ứng với các ID đó.
+Cú pháp: Model.browse ([id])? Hồ sơ
+Ví dụ: self.browse ([7, 18, 12])
+Thao tác này trả về các bản ghi có ID 7, 18 và 12 của mô hình tương ứng.
+4. copy()
+Phương thức copy () được sử dụng để sao chép một tập bản ghi trong mô hình hiện tại. Phương thức này chỉ chấp nhận đối số mặc định.
+Cú pháp: Model.copy (mặc định = Không có)? kỷ lục mới
+Ví dụ: new_record = self.copy ()
+Thao tác này tạo và trả về một bản sao của bản ghi hoạt động hiện tại trong mô hình.
+5. search()
+Phương thức search () được sử dụng để tìm kiếm các bản ghi trong mô hình đã cho dựa trên miền tìm kiếm được truyền làm đối số. Phương thức này chấp nhận một miền tìm kiếm để kiểm tra các điều kiện phù hợp bên trong mô hình và trả về các tập bản ghi.
+Cú pháp: Model.search (args [, offset = 0] [, limit = None] [, order = None] [, count = False]) -> bản ghi
+Nếu không có đối số nào được cung cấp dưới dạng miền tìm kiếm, tất cả các bản ghi sẽ được khớp và trả về.
+Phần bù xác định số lượng bản ghi được bỏ qua, giới hạn xác định số lượng bản ghi tối đa được trả về, thứ tự xác định chuỗi sắp xếp và đếm nếu được đặt là true chỉ trả về số lượng bản ghi phù hợp với điều kiện miền.
+Eg: self.search([('is_company', '=', True)], limit=1)
+
+6. search_count()
+Phương thức search_count () trả về số lượng bản ghi phù hợp với miền tìm kiếm. Phương thức này chấp nhận một miền tìm kiếm làm đối số của nó.
+Cú pháp: Model.search_count (args)? int
+Ví dụ: self.search_count ([('product_tmpl_id', '=', record.product_tmpl_id.id), ('active', '=', True),])
+Điều này trả về tập hợp các bản ghi thỏa mãn các điều kiện miền được đưa ra dưới dạng các đối số bên trong mô hình.
+
+7. unlink()
+Phương pháp hủy liên kết được sử dụng để xóa tập bản ghi khỏi mô hình. Phương thức hủy liên kết không nhận bất kỳ đối số nào, nó loại bỏ bản ghi hoạt động hiện tại của mô hình.
+Cú pháp: Model.unlink ()
+Vd: self.unlink ()
+Thao tác này sẽ xóa bản ghi hiện tại bên trong bản thân.
+
+8. exists()
+Phương thức tồn tại () trả về tập hợp con các bản ghi tồn tại trong chính nó. Nó trả về một tập bản ghi chỉ chứa các bản ghi tồn tại trong cơ sở dữ liệu. Nó cũng có thể được sử dụng để kiểm tra xem một bản ghi cụ thể có còn tồn tại hay không.
+Cú pháp: Model.exists ()? Hồ sơ
+Ví dụ: 
+if not rec.exists():
+        raise Exception("The record has been deleted")
+
+9. ensure_one()
+Phương thức ensure_one () kiểm tra xem tập hợp các bản ghi chỉ chứa một bản ghi duy nhất hay không, nếu không sẽ tạo ra một ngoại lệ.
+Cú pháp: Model.ensure_one ()
+
+10. filtered()
+Phương thức được lọc trả về một tập hợp các bản ghi thỏa mãn hàm được cung cấp dưới dạng đối số. Phương thức này chấp nhận một hàm làm đối số của nó.
+Cú pháp: Model.filtered (func)? Hồ sơ
+Ví dụ: records.filtered (lambda r: r.company_id == user.company_id)
+Điều này chỉ lưu giữ hồ sơ có công ty của người dùng hiện tại.
+
+11. mapped()
+Hàm ánh xạ () áp dụng hàm đã cho dưới dạng đối số trên tất cả các bản ghi trong bản thân, rồi trả về kết quả dưới dạng danh sách hoặc tập bản ghi. Phương thức này chấp nhận một hàm làm đối số của nó.
+Syntax: Model.mapped(func) ? recordset / list
+Eg: records.mapped(lambda r: r.field1 + r.field2)
+Điều này trả về danh sách tổng hai trường cho mỗi bản ghi trong tập hợp
+12. sorted()
+Phương thức sorted () trả về các bản ghi bên trong bản thân, được sắp xếp theo khóa được truyền làm đối số.
+Cú pháp: Model.sorted (key = None, reverse = False)
+Nếu đảo ngược được đặt là Đúng, trả về kết quả theo thứ tự ngược lại.
+Ví dụ: records.sorted (key = lambda r: r.name)
+Sắp xếp bản ghi dựa trên trường tên
+
+
